@@ -6,12 +6,15 @@ const UseStateArray = () => {
 
   const removeItem = (id) => {
     let newPeople = people.filter((person) => person.id !== id);
+    console.log(newPeople)
     setPeople(newPeople)
+
       ;
   }
   return <>
     {
       people.map((person) => {
+        console.log(people)
         const { id, name } = person
         return <div key={id} className='item'>
           <h4>

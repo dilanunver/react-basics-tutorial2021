@@ -6,6 +6,19 @@ import { useFetch } from '../../9-custom-hooks/final/2-useFetch'
 const url = 'https://course-api.com/javascript-store-products'
 
 // every time props or state changes, component re-renders
+const calculateMostExpensive = (data) => {
+  console.log(data)
+  return data.reduce((total, item) => {
+    console.log('item', item)
+    const price = item.fields.price;
+    if (price >= total) {
+      console.log('total', total)
+      total = price
+    }
+    console.log(total)
+    return total
+  }, 0) / 100
+}
 
 const Index = () => {
   const { products } = useFetch(url)
@@ -14,7 +27,11 @@ const Index = () => {
 
   const addToCard = useCallback(() => {
     setCart(cart + 1)
-  }, [cart])
+  }, [cart]);
+  const mostExpensive = useMemo(() =>
+    calculateMostExpensive(products), [products,
+  ]
+  )
 
   return (
     <>
@@ -23,6 +40,7 @@ const Index = () => {
         click me
       </button>
       <h1 style={{ marginTop: '3rem' }}>cart: {cart}</h1>
+      <h1>Most Expensive : ${mostExpensive}</h1>
       <BigList products={products} addToCard={addToCard} />
     </>
   )
